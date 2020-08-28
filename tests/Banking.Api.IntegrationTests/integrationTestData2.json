@@ -1,0 +1,66 @@
+{
+  "institutions": [
+    {
+      "id": 78923,
+      "name": "Test Credit Union",
+      "createdAtUtc": "2020-08-27T19:22:35.6094803Z"
+
+    },
+    {
+      "id": 78924,
+      "name": "Test Credit Union 2",
+      "createdAtUtc": "2020-08-26T19:22:35.6094803Z"
+    },
+    {
+      "id": 78925,
+      "name": "Test Credit Union 3",
+      "createdAtUtc": "2020-08-27T18:22:35.6094803Z"
+
+    }
+  ],
+  "members": [
+    {
+      "id": 234789,
+      "givenname": "John",
+      "surname": "Doe",
+      "institutionId": 78923,
+      "accounts": [
+        {
+          "id": 23456,
+          "balance": 12.50
+        }
+      ]
+    },
+    {
+      "id": 234790,
+      "givenname": "Jane",
+      "surname": "Doe",
+      "institutionId": 78923,
+      "accounts": [
+        {
+          "id": 23457,
+          "balance": 20.50
+        }
+      ]
+    },
+    {
+      "id": 234791,
+      "givenname": "Jim",
+      "surname": "Smith",
+      "institutionId": 78924,
+      "accounts": [
+        {
+          "id": 23458,
+          "balance": 10.01
+        }
+      ]
+    },
+    {
+      "id": 234792,
+      "givenname": "Jan",
+      "surname": "Smith",
+      "institutionId": 78924,
+      "accounts": []
+    }
+  ]
+}
