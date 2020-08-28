@@ -44,6 +44,14 @@ namespace Banking.Api.Institutions
             public string Name { get; set; }
         }
 
+        public class Mapping : Profile
+        {
+            public Mapping()
+            {
+                CreateMap<Institution, InstitutionModel>();
+            }
+        }
+
         public class Handler : IRequestHandler<Query, List<InstitutionModel>>
         {
             private readonly ApplicationDbContext _db;

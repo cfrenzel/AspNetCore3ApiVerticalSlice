@@ -91,6 +91,7 @@ namespace Bank.Api.IntegrationTests
             Assert.Equal(2, membList.Count); //should have 2 item on page 2
         }
 
+
         [Fact]
         public async Task Should_Return_BadRequest_When_List_With_Page_Less_Than_1()
         {
@@ -99,8 +100,8 @@ namespace Bank.Api.IntegrationTests
             var contentString = await response.Content.ReadAsStringAsync();
             _output.WriteLine(contentString);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-           
          }
+
 
         [Fact]
         public async Task Should_Find_By_Id()
@@ -136,8 +137,6 @@ namespace Bank.Api.IntegrationTests
             Assert.Equal(23457, account.id.Value);
             Assert.Equal(JTokenType.Float, account.balance.Type);
             Assert.Equal(20.50, account.balance.Value);
-            // Assert.Equal("USD", item.currencyCode.Value);
-            // Assert.Equal(JTokenType.String, item.currencyCode.Type);
         }
         
         

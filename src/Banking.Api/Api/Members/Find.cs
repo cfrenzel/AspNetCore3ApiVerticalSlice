@@ -55,6 +55,15 @@ namespace Banking.Api.Members
             public string CurrencyCode { get; set; } = "USD";
         }
 
+        public class Mapping : Profile
+        {
+            public Mapping()
+            {
+
+                CreateMap<Member, MemberModel>();
+                CreateMap<Account, AccountModel>();
+            }
+        }
 
         public class Handler : IRequestHandler<Query, MemberModel>
         {

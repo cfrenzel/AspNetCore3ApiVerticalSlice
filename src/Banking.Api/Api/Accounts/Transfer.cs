@@ -11,12 +11,13 @@ using Banking.Persistence.EFCore;
 using Banking.Core.Entities;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Banking.Api.Accounts
 {
     public class Transfer
     {
-        public class Command : IRequest<Response>
+        public class Command : IRequest<ActionResult<Response>>
         {
             public Int32 SourceAccountId { get; set; }
             public Int32 BeneficiaryAccountId { get; set; }
@@ -48,7 +49,7 @@ namespace Banking.Api.Accounts
         }
 
 
-        public class Handler : IRequestHandler<Command, Response>
+        public class Handler : IRequestHandler<Command, ActionResult<Response>>
         {
             private readonly ApplicationDbContext _db;
             private readonly ILogger<Handler> _log;
@@ -61,20 +62,22 @@ namespace Banking.Api.Accounts
                 _log = log;
             }
 
-            public async Task<Response> Handle(Command command, CancellationToken cancellationToken)
+            //public async Task<Response> Handle(Command command, CancellationToken cancellationToken)
+            public async Task<ActionResult<Response>> Handle(Command command, CancellationToken cancellationToken)
             {
                 var sourceAccount = await _db.Accounts.SingleOrDefaultAsync(x => x.Id == command.SourceAccountId);
                 var beneficiiaryAccount = await _db.Accounts.SingleOrDefaultAsync(x => x.Id == command.BeneficiaryAccountId);
 
-                if(sourceAccount == null || beneficiiaryAccount == null)
-                    ///TODO: convert these with custom exception handlers in middleware or return ActionResult directly
-                    throw new InvalidOperationException("Not Found");
+                if (sourceAccount == null)
+                    return new NotFoundResult();
+                else if (beneficiiaryAccount == null)
+                    return new BadRequestObjectResult("Invalid beneficiary account");
 
                 if (!sourceAccount.CurrencyCode.Equals(beneficiiaryAccount.CurrencyCode))
-                    throw new InvalidOperationException("Cannot currently transfer between accounts of different currency");
+                    return new BadRequestObjectResult("Cannot transfer between accounts of different currency");
 
                 if (sourceAccount.Balance < command.TransferAmount)
-                    throw new InvalidOperationException("Insufficient Funds");
+                    return new BadRequestObjectResult("Insufficient Funds");
 
                 var origBalance = sourceAccount.Balance;
                 sourceAccount.Balance -= command.TransferAmount;

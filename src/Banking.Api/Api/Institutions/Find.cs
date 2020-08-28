@@ -45,7 +45,14 @@ namespace Banking.Api.Institutions
             public DateTime CreatedAtUtc { get; set; }
         }
 
- 
+        public class Mapping : Profile
+        {
+            public Mapping()
+            {
+                CreateMap<Institution, InstitutionModel>();
+            }
+        }
+
         public class Handler : IRequestHandler<Query, InstitutionModel>
         {
             private readonly ApplicationDbContext _db;

@@ -76,8 +76,6 @@ namespace Bank.Api.IntegrationTests
 
 
       
-
-
         [Fact]
         public async Task Should_Return_BadRequest_With_Transfer_On_Amount_le_Zero()
         {
@@ -120,13 +118,9 @@ namespace Bank.Api.IntegrationTests
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        /// <summary>
-        /// TODO: get a better server error.  Extend to allow handler to communicate validaton erros
-        /// or return ActionResult from handler
-        /// </summary>
-        /// <returns></returns>
+        
         [Fact]
-        public async Task Should_Return_InternalError_With_Transfer_On_Insufficient_Balance()
+        public async Task Should_Return_BadRequest_With_Transfer_On_Insufficient_Balance()
         {
             var transferData = new
             {
@@ -142,19 +136,13 @@ namespace Bank.Api.IntegrationTests
 
             var contentString = await response.Content.ReadAsStringAsync();
             _output.WriteLine(contentString);
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
         }
 
 
-
-        /// <summary>
-        /// TODO: get a better server error.  Extend to allow handler to communicate validaton erros
-        /// or return ActionResult from handler
-        /// </summary>
-        /// <returns></returns>
         [Fact]
-        public async Task Should_Return_InternalError_With_Transfer_On_Invald_Source_Account()
+        public async Task Should_Return_NotFound_With_Transfer_On_Invald_Source_Account()
         {
             var transferData = new
             {
@@ -170,17 +158,12 @@ namespace Bank.Api.IntegrationTests
 
             var contentString = await response.Content.ReadAsStringAsync();
             _output.WriteLine(contentString);
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
         }
 
-        /// <summary>
-        /// TODO: get a better server error.  Extend to allow handler to communicate validaton erros
-        /// or return ActionResult from handler
-        /// </summary>
-        /// <returns></returns>
         [Fact]
-        public async Task Should_Return_NotFound_With_Transfer_On_Invald_Beneficiary_Account()
+        public async Task Should_Return_BadRequest_With_Transfer_On_Invald_Beneficiary_Account()
         {
             var transferData = new
             {
@@ -196,7 +179,7 @@ namespace Bank.Api.IntegrationTests
 
             var contentString = await response.Content.ReadAsStringAsync();
             _output.WriteLine(contentString);
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
         }
 

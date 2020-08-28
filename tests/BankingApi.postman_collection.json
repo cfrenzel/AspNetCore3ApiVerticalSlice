@@ -1,0 +1,330 @@
+{
+	"info": {
+		"name": "BankingApi",
+		"_postman_id": "00e6e22b-21c9-48b3-b4a8-dc939e698652",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "InstitutionList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/institution",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"institution"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "InstitutionById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/institution/78923",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"institution",
+						"78923"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "InstitutionByIdNotFound",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/institution/78920",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"institution",
+						"78920"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "InstitutionCreate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Id\":234239,\r\n   \"name\":\"Fifth ABC Union\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/institution",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"institution"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "InstitutionCreateInvald",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Id\":-234234,\r\n   \"name\":\"Second ABC Union\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/institution",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"institution"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "MemberList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/member?pageNumber=1&pageSize=50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"member"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "pageSize",
+							"value": "50",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "MemberById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/member/234789",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"member",
+						"234789"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "MemberCreate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Id\":3334,\r\n   \"givenname\":\"Joan\",\r\n   \"surname\":\"Smith\",\r\n   \"institutionid\":78923\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/member",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"member"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "MemberUpdate",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"id\":234789,\r\n   \"givenname\":\"Johnny\",\r\n   \"surname\":\"Doe\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/member/234789",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"member",
+						"234789"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "MemberDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Id\":3330,\r\n   \"givenname\":\"John\",\r\n   \"surname\":\"Smith\",\r\n   \"institutionid\":78923\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/member/3334",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"member",
+						"3334"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "AccountTransfer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"sourceAccountId\":23456,\r\n   \"beneficiaryAccountId\":23457,\r\n   \"transferAmount\":0.33\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:56185/api/v1/account/23456/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "56185",
+					"path": [
+						"api",
+						"v1",
+						"account",
+						"23456",
+						"transfer"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -45,6 +45,13 @@ namespace Banking.Api.Members
             public DateTime CreatedAtUtc { get; set; }
         }
 
+        public class Mapping : Profile
+        {
+            public Mapping()
+            {
+                CreateMap<Member, MemberModel>();
+            }
+        }
 
         public class Handler : IRequestHandler<Command, MemberModel>
         {
@@ -62,6 +69,8 @@ namespace Banking.Api.Members
             public async Task<MemberModel> Handle(Command command, CancellationToken cancellationToken)
             {
                 var inst = _db.Institutions.Find(command.InstitutionId);
+
+
                 var newMember = new Member(command.Id, command.GivenName, command.SurName, inst);
                 _db.Members.Add(newMember);
                 await _db.SaveChangesAsync();
