@@ -45,15 +45,14 @@ namespace Banking.Api.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Create.InstitutionModel>> Create([FromBody] Create.Command command)
+        public async Task<ActionResult<Create.InstitutionModel>> Create(ApiVersion version, [FromBody] Create.Command command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var newInstitution = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Find), new { id = newInstitution.Id }, newInstitution );
+            return CreatedAtAction(nameof(Find), new { id = newInstitution.Id, version = $"{version}" }, newInstitution );
         }
-
 
 
     }

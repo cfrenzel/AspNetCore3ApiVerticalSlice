@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using Banking.Api.Institutions;
+using System.Text;
 
 namespace Bank.Api.IntegrationTests
 {
@@ -149,6 +150,30 @@ namespace Bank.Api.IntegrationTests
             _output.WriteLine(contentString);
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
+        }
+
+        [Fact]
+        public async Task Should_Return_Created_On_Member_Create()
+        {
+            var memerData = new
+            {
+                id = 3335,
+                givenName = "Joan",
+                surName = "Smith",
+                institutionId = 78923,
+            };
+
+            // Act
+            var response = await _fixture.Client.PostAsync("/api/v1/member",
+                new StringContent(JsonConvert.SerializeObject(memerData), Encoding.UTF8, "application/json")
+            );
+
+            var contentString = await response.Content.ReadAsStringAsync();
+            _output.WriteLine(contentString);
+           
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.True(response.Headers.Contains("Location"));
+            Assert.Contains("api/v1/member/3335", response.Headers.Location.AbsoluteUri.ToLower());
         }
     }
 }

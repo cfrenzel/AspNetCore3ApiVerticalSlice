@@ -42,13 +42,13 @@ namespace Banking.Api.Members
         }
 
         [HttpPost]
-        public async Task<ActionResult<Create.MemberModel>> Create([FromBody] Create.Command command)
+        public async Task<ActionResult<Create.MemberModel>> Create(ApiVersion version, [FromBody] Create.Command command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var newMember = await _mediator.Send(command);
-            return CreatedAtAction(nameof(Find), new { id = newMember.Id }, newMember);
+            return CreatedAtAction(nameof(Find), new { id = newMember.Id, version = $"{version}"}, newMember);
         }
 
 

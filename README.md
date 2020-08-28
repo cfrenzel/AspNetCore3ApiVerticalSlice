@@ -26,6 +26,7 @@
     
 - And
    - Microsoft.AspNetCore.Mvc.Versioning - for flexible out of the box versioning
+   - Swagger configured with support for the above versioning 
    - FluentValidation
    - Simiple Paging
    - Dependency Injection throughout
@@ -42,9 +43,3 @@
     - No HATEOAS
     - No Content Negotiaton (though it would be easy to add)
    
--
-TODO:
-- api error handling
-- add swagger
-- etag concurrency: https://blog.jeremylikness.com/blog/2017-12-15_five-restful-web-design-patterns-implemented-in-asp.net-core-2.0-part-4-optimistic-concurrency/
-- better error messages from handler (account balance, etc...)

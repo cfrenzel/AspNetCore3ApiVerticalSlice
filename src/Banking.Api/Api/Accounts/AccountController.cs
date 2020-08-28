@@ -11,6 +11,7 @@ using AutoMapper;
 using MediatR;
 
 using Banking.Api.Accounts;
+using Microsoft.AspNetCore.Http;
 
 namespace Banking.Api.Controllers
 {
@@ -32,6 +33,7 @@ namespace Banking.Api.Controllers
 
 
         [HttpPost("{id}/transfer")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Transfer.Response>> Transfer(Int32 id, [FromBody] Transfer.Command command)
         {
             if (command.SourceAccountId != id)

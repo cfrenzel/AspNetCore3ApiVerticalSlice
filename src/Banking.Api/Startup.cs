@@ -1,24 +1,25 @@
-using System;
-using System.Reflection;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
-using MediatR;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.ProblemDetails;
+using MediatR;
 
 using Banking.Api.Extensions;
 using Banking.Persistence.EFCore;
-using AutoMapper;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+
+////default conventions https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/conventions?view=aspnetcore-3.1
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
+
 
 namespace Banking.Api
 {
@@ -54,11 +55,7 @@ namespace Banking.Api
             );
 
             //we'll use microsoft's versioning library for now
-            services.AddApiVersioning(config =>
-            {
-                config.DefaultApiVersion = new ApiVersion(1, 0);
-                config.AssumeDefaultVersionWhenUnspecified = true;
-            });
+            AddVersioningWithSwagger(services);
 
             ///see https://github.com/khellang/Middleware
             services.AddProblemDetails();
@@ -66,7 +63,7 @@ namespace Banking.Api
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             app.UseProblemDetails();
 
@@ -80,6 +77,14 @@ namespace Banking.Api
                 app.UseHsts();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.RoutePrefix = string.Empty;
+                foreach (var description in provider.ApiVersionDescriptions)
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                
+            });
 
             app.UseRouting();
 
@@ -91,5 +96,32 @@ namespace Banking.Api
             });
 
         }
+
+
+        private void AddVersioningWithSwagger(IServiceCollection services)
+        {
+            services.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+            });
+            services.AddVersionedApiExplorer(options =>
+            {
+                // format code will format the version as "'v'major[.minor][-status]"
+                // versioning by url segment. the SubstitutionFormat can also be used to control the format of the API version in route templates
+                //https://github.com/microsoft/aspnet-api-versioning/blob/master/samples/aspnetcore/SwaggerSample/Startup.cs
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Version = "v1", Title = "v1 Banking API" });
+                options.CustomSchemaIds(x => x.FullName);//need this because we name everythiing Command/Query
+            });
+
+        }
+
+     
     }
 }
