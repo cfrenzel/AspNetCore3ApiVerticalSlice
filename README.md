@@ -1,13 +1,14 @@
 
  
  
-- Uses a json file to seed an embedded sqlLite database.  Use migrations to create the database on startup
+- Uses a json file to seed an embedded sqlLite database.  Uses migrations to create the database on startup
 
-- Uses a vertical slice architecture to keep controllers, models, logic tightly together per action
-   - Use MediatR to simple CQRS (command / query).  Also gives a great place to hook in pipelines
-     to perform any needed logic before or after handling the command/query (ex. validaton/logging)
+- Uses a *vertical slice* architecture to keep controllers/models/handlers isolated and in one place
+   - Use MediatR for simple CQRS (command / query).  Also gives a great place to hook in pipelines
+     to perform any needed logic before or after handling a command/query (ex. validaton/logging/etc..)
    
    - Allows full control of models for every endpoint (or they can be shared if desired)
+  	- api input/output excplicitly defined in a purpose built model per action 
         - no overposting
         - clean interface between api models and efcore/entities
         - can query using any technology for optimal performance
@@ -15,9 +16,9 @@
             - efcore with AutoMapper.QueryableExtensions (see List Handlers / ProjectTo)
             - dapper for complex queries
             - or even get data from a third party
-        - AutoMapper when needing to cleanly go between Entities and Models (Dto)
+        - AutoMapper when needed to cleanly go between Entities and Models(Dto)
 
-   - We could add a more generic/advanced base return type to our handlers to get all kinds
+   - We could add a more generic/advanced base response type to our handlers to get all kinds
       of cool built-in behavior based on our needs
       - A cleaner approach would be to return IActionResult from the handler.
         Your controllers would basically be empty! We could write a little miiddelware to avoid controllers completely :)
